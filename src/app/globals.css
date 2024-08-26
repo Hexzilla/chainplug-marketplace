@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+.social-networks {
+  position: relative;
+  top: -3px;
+  display: flex;
+  gap: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px; /* For Chrome, Safari, and Opera */
+}
+
+.custom-scrollbar {
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
+}
+
+@font-face {
+  font-family: 'Sora';
+  src: url('../../Public/font/sora-3/Sora-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
