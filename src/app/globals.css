@@ -34,7 +34,7 @@
 
 @font-face {
   font-family: 'Sora';
-  src: url('../../Public/font/sora-3/Sora-Regular.ttf') format('truetype');
+  src: url('../../public/font/sora-3/Sora-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }

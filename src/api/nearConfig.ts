@@ -1,8 +1,6 @@
 const CONTRACT_NAME: any = process.env.NEXT_PUBLIC_CONTRACT_NAME;
 
 export default function getConfig(env: string) {
-    console.log(`getConfigtestnet~~~~~~~~`, env);
-    console.log(`CONTEACT_NAME`, CONTRACT_NAME)
   switch (env) {
     case "production":
     case "mainnet":
