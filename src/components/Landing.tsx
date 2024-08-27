@@ -27,7 +27,7 @@ const LandingPage = () => {
       {/* <div className="flex w-full">
         <Items showModal={handleOpenBuyModal} />
       </div> */}
-      <Marketplace />
+      <Marketplace showModal={handleOpenBuyModal}/>
       <div className="mx-24 mt-4">
         {!!showBuyModal && (
           <BuyModal closeModal={handleCloseBuyModal} item={selectedItem} />

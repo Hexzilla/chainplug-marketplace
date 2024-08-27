@@ -13,10 +13,10 @@ const Header = () => {
   const buttonAction = isConnected ? disconnect : connect;
 
   return (
-    <div className="flex justify-between items-center bg-white p-4 sticky top-0 border-b z-30">
-      <Link href="/" className="flex gap-2 items-center">
+    <div className="flex justify-between items-center  bg-transparent p-4 ml-8 sticky top-0 border-b z-30">
+      {/* <Link href="/" className="flex gap-2 items-center">
         <div className="text-black font-bold">MARKET</div>
-      </Link>
+      </Link> */}
       <div>
         <MbButton onClick={buttonAction} label={buttonLabel} />
       </div>

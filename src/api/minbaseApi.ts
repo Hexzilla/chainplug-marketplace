@@ -2,7 +2,7 @@ import axios from "axios";
 import getConfig from "./nearConfig";
 import * as nearApi from "near-api-js";
 
-const nearConfig = getConfig(process?.env?.NETWORK || "testnet");
+const nearConfig = getConfig(process?.env?.RENTAL_NETWORK || "testnet");
 const mintbaseApi = process.env.NEXT_PUBLIC_MINTBASEAPI || "testnet";
 
 export const getFeatureItems = async () => {

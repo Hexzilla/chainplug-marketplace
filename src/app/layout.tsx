@@ -42,8 +42,8 @@ export default function RootLayout({
   })
 
   const MintbaseWalletSetup = {
-    contractAddress: "hellovirtualworld.mintspace2.testnet",
-    network: "testnet",
+    contractAddress: "drops.mintbase1.near",
+    network: process.env?.NEXT_PUBLIC_NETWORK,
     callbackUrl: getCallbackUrl(),
   };
 

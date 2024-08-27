@@ -9,7 +9,7 @@ import FeaturedItems from "./FeaturedItem";
 import FeaturedCollection from "./FeaturedCollection";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { imageUrl } from "@/utils";
-import { WalletConnect } from "@/types/types";
+import { SelectedNft, WalletConnect } from "@/types/types";
 
 const GET_TOKEN = gql`
   query GetTokens($contract_id: String!, $token_id: String!) {
@@ -25,6 +25,7 @@ const GET_TOKEN = gql`
       nft_contract_id
       nft_contract_icon
       nft_contract_name
+      metadata_id
       owner
       title
       token_id
@@ -49,7 +50,10 @@ const GET_TOKENS = gql`
   }
 `;
 
-const Marketplace = () => {
+interface Props {
+  showModal: (item: SelectedNft)=> void
+}
+const Marketplace = ({showModal}: Props) => {
   const [featuredItems, setFeaturedItems] = useState<any>([]);
   const [featuredData, setFeaturedData] = useState<any>([]);
   const [rentalListings, setRentalListings] = useState<any[]>([]);
@@ -173,7 +177,7 @@ const Marketplace = () => {
             </div>
             <div className="flex flex-wrap w-grid full justify-between justify-items-center gap-8 mt-8">
               {(featuredData || []).map((item: any, index: any) => (
-                <div key={index}>
+                <div key={index} onClick={() => showModal({ metadataId: item.metadata_id })}>
                   <div className="w-[501px] h-[501px] text-white">
                     <ImageView
                       url={imageUrl(item.base_uri, item.media)}
