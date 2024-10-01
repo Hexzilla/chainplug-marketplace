@@ -14,48 +14,58 @@ export enum TransactionEnum {
   WITHDRAW_OFFER = 'withdraw-offer',
 }
 
-export interface TokenDetails {price: number, tokenId: string}
+export interface TokenDetails {
+  price: number;
+  tokenId: string;
+}
 
-export interface TokenDetailsVariant {price: number, token: { id: string } }
+export interface TokenDetailsVariant {
+  price: number;
+  token: { id: string };
+}
 
 export interface TokenDataQuery {
-  tokenData: TokenData[]
+  tokenData: TokenData[];
 }
 export interface TokenData {
-  listings: TokenDetails[] | TokenDetailsVariant[],
-  media: string,
-  metadata_id: string,
-  title: string,
-  nft_contract_id: string,
-  token_id:string,
-  listings_aggregate: { aggregate: { count: number } }
+  listings: TokenDetails[] | TokenDetailsVariant[];
+  media: string;
+  metadata_id: string;
+  title: string;
+  nft_contract_id: string;
+  token_id: string;
+  listings_aggregate: { aggregate: { count: number } };
 }
 
 export interface TokenListData {
-  price: number,
-  prices: TokenDetails[],
-  amountAvailable: number,
-  tokensTotal: number,
-  tokenId:string,
-  tokenList: TokenDetailsVariant[],
-  tokenData: TokenData,
-  isTokenListLoading: boolean,
-  marketId?: string
-  tokenKey?: string
-  nftContractId?: string
+  price: number;
+  prices: TokenDetails[];
+  amountAvailable: number;
+  tokensTotal: number;
+  tokenId: string;
+  tokenList: TokenDetailsVariant[];
+  tokenData: TokenData;
+  isTokenListLoading: boolean;
+  marketId?: string;
+  tokenKey?: string;
+  nftContractId?: string;
 }
 
 export interface SelectedNft {
-  metadataId: string
+  metadataId: string;
 }
 
 export type Store = {
-  id: string
-  name: string
+  id: string;
+  name: string;
 };
 
+export type PeriodType = {
+  id: number;
+  name: string;
+};
 export type StoreNfts = {
-  base_uri: string
+  base_uri: string;
   createdAt: string;
   listed: boolean;
   media: string;
@@ -90,4 +100,50 @@ export interface FeaturedData {
   owner: string,
   title: string,
   token_id: string
+}
+
+export interface Payout {
+  [key: string]: string;
+}
+
+export interface ListedToken {
+  owner_id: string;
+  approval_id: number;
+  nft_contract_id: string;
+  nft_token_id: string;
+  ft_contract_id: string;
+  price: string;
+  lease_start_ts_nano: number;
+  lease_end_ts_nano: number;
+  payout: {
+    payout: Payout;
+  };
+}
+
+export interface MarketToken {
+  owner_id: string;
+  nft_contract_id: string;
+  nft_token_id: string;
+  ft_contract_id: string;
+  price: string;
+  payout: {
+    payout: Payout;
+  };
+  title: string;
+  description: string;
+  media: string;
+  base_uri: string;
+  metadata_id: string;
+}
+
+export interface AdminMarketToken {
+  nft_contract_id: string;
+  price?: string | null | number;
+  nft_token_id?: string;
+  title: string;
+  description?: string;
+  media: string;
+  base_uri: string;
+  metadata_id: string;
+  approved: boolean;
 }

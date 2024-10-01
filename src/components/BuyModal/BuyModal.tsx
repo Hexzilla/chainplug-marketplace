@@ -1,5 +1,5 @@
 import { useMetadataByMetadataId } from '../../hooks/useMetadatabyMetadataId';
-import { SelectedNft } from '../../types/types';
+import { MarketToken, SelectedNft } from '../../types/types';
 import { BuyModalInfo } from './BuyModalInfo';
 import { BuyModalTemplate } from './BuyModalTemplate';
 import { LoadingSaleCard } from './LoadingSaleCard';
@@ -8,12 +8,12 @@ function BuyModal({
   closeModal,
   item,
 }: {
-  closeModal: () => void
-  item: SelectedNft
+  closeModal: () => void;
+  item: MarketToken;
 }): JSX.Element {
-  const { metadataId } = item;
+  const { metadata_id } = item;
 
-  const modalInfo = useMetadataByMetadataId({ metadataId });
+  const modalInfo = useMetadataByMetadataId({ metadataId: metadata_id });
 
   if (modalInfo?.isTokenListLoading) {
     return (

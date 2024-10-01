@@ -5,16 +5,15 @@ Description: This hook calls storeNfts method from @mintbase-js/data to get stor
 
 */
 
-import { checkStoreName, fetchGraphQl, ParsedDataReturn, QUERIES, storeData, storeNfts } from "@mintbase-js/data";
-import { StoreNftsResult } from "@mintbase-js/data/lib/api/storeNfts/storeNfts.types";
-import { useQuery } from "react-query";
-import { mbjs, NEAR_NETWORKS, Network } from "@mintbase-js/sdk";
-import { MAINNET_CONFIG, TESTNET_CONFIG } from "../config/constants";
+import { ParsedDataReturn, storeNfts } from '@mintbase-js/data';
+import { StoreNftsResult } from '@mintbase-js/data/lib/api/storeNfts/storeNfts.types';
+import { useQuery } from 'react-query';
+import { mbjs, NEAR_NETWORKS, Network } from '@mintbase-js/sdk';
+import { MAINNET_CONFIG, TESTNET_CONFIG } from '../config/constants';
 
 const mapStoreNfts = (data: ParsedDataReturn<StoreNftsResult>) => ({
   nftsData: data?.data?.mb_views_nft_metadata_unburned,
 });
-
 
 const useStoreNfts = (store?: string) => {
   const stores =
@@ -25,21 +24,23 @@ const useStoreNfts = (store?: string) => {
   const defaultStores = process.env.NEXT_PUBLIC_STORES || stores;
 
   const formatedStores = defaultStores.split(/[ ,]+/);
+
   const { isLoading, error, data } = useQuery(
-    ["storeNfts", store],
+    ['storeNfts', store],
     () =>
-      storeNfts(
-        store || formatedStores,
-        true,
-        undefined,
-        (process?.env?.NEXT_PUBLIC_NETWORK as Network) || "testnet"
-      ),
+      storeNfts({
+        contractAddress: store || formatedStores,
+        showOnlyListed: false,
+        pagination: { limit: 100, offset: 0 },
+        network: (process?.env?.NEXT_PUBLIC_NETWORK as Network) || 'testnet',
+      }),
     {
       retry: false,
       refetchOnWindowFocus: false,
       select: mapStoreNfts,
     }
   );
+
   return { ...data, error, loading: isLoading };
 };
 

@@ -1,0 +1,61 @@
+.tokenBg {
+  background-image: url("/marketPlace/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px;
+  /* width: 160px; */
+  width: 100%;
+  height: 120px;
+}
+
+@media screen and (max-width: 1920px) {
+  .tokenBg {
+    width: 780px;
+    height: 560px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .tokenBg {
+    max-width: 820px;
+    height: 460px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tokenBg {
+    max-width: 600px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tokenBg {
+    max-width: 380px;
+    height: 480px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .tokenBg {
+    /* width: 260px; */
+    padding: 10px;
+  }
+}
+
+.tokenImg {
+  width: 100%;
+  object-fit: cover;
+  max-height: 100%;
+}
+/* 
+@media screen and (min-width: 480px) {
+  .tokenImg {
+    width: max-content;
+    height: max-content;
+  }
+} */
