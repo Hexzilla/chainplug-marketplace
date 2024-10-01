@@ -9,25 +9,21 @@ import FeaturedCollections from './FeaturedCollections';
 import { useMbWallet } from '@mintbase-js/react';
 import { AdminMarketToken, MarketToken } from '@/types/types';
 import { AdminItem } from '@/components/AdminItem';
-import { useGlobalContext } from '@/hooks/useGlobalContext';
 import LoadingItem from '@/components/LoadingItem';
 import MarketPlaceLoadingView from './MarketPlaceLoadingView';
 import { useMemo } from 'react';
 
 export default function LandingPage() {
   const router = useRouter();
-  const { setSelectedItem } = useGlobalContext();
   const { nftTokens, marketTokenLoading, marketTokenError } = useMarketToken();
-  const { adminNftTokens, adminMarketTokenLoading, adminMarketTokenError } =
-    useAdminMarketToken();
-  const { activeAccountId } = useMbWallet();
-  const isAdminAccount =
-    activeAccountId === process.env.NEXT_PUBLIC_AFFILIATE_ACCOUNT;
+  const { adminNftTokens, adminMarketTokenLoading, adminMarketTokenError } = useAdminMarketToken();
+  const { activeAccountId } = useMbWallet(); 
+  const isAdminAccount = activeAccountId === process.env.NEXT_PUBLIC_AFFILIATE_ACCOUNT;
 
   const showDetails = (item?: MarketToken | AdminMarketToken) => {
     if (item) {
-      setSelectedItem(item);
-      router.push('/nft-details');
+      localStorage.setItem('selectedToken', JSON.stringify(item));
+      router.push(`/nft-details/${item.nft_token_id}`);
     }
   };
 

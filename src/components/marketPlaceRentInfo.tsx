@@ -7,9 +7,9 @@ interface Props {
   data: MarketPlace;
 }
 const MarketPlaceRentInfo = ({ item, data }: Props) => {
-  const isAdminAccount =
-    item.nft_contract_id === process.env.NEXT_PUBLIC_AFFILIATE_ACCOUNT;
-  const tokenId = useTokenIdByMetadataId(item.metadata_id);
+  const isAdminAccount = item?.nft_contract_id === process.env.NEXT_PUBLIC_AFFILIATE_ACCOUNT;
+  const tokenId = useTokenIdByMetadataId(item?.metadata_id);
+
   return (
     <div className='mt-4'>
       <div
