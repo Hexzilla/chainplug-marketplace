@@ -1,12 +1,13 @@
 'use client';
-
+import { useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useMbWallet } from '@mintbase-js/react';
 import MarketPlaceRentInfo from '@/components/marketPlaceRentInfo';
 import NftViewer from '@/components/nftViewer';
 import { NFTDetails } from '@/constants';
 import { useGlobalContext } from '@/hooks/useGlobalContext';
-import { useMemo } from 'react';
+import { MarketToken } from '@/types/types';
+import { getSelectedToken } from '@/utils';
 
 export type NFTDetail = {
   title: string;
@@ -22,25 +23,28 @@ export default function MarketPlaceDetailsPage() {
 
   const selectedItem = useMemo(() => {
     if (tokenId && typeof tokenId === 'string') {
-      const savedItem = localStorage?.getItem('selectedToken');
-      if (savedItem) {
-        return JSON.parse(savedItem);
-      }
+      return getSelectedToken() as MarketToken;
     }
     return null;
   }, [tokenId]);
 
   const handleRent = (isRent: boolean) => {
     setIsRent(isRent);
-    router.push('/nft-rent');
+    if (selectedItem) {
+      router.push(`/nft-rent/${selectedItem.nft_token_id}?rent=${isRent ? 1 : 0}`);
+    }
   };
+
+  if (!selectedItem) {
+    return null;
+  }
 
   return (
     <div className='grid sm:grid-cols-1 lg:grid-cols-2 align-items-center gap-20 h-full px-10 sm:mt-32 lg:mt-0'>
       <div className='flex items-center justify-center text-white h-full'>
         <NftViewer
-          media={selectedItem?.media}
-          base_uri={selectedItem?.base_uri}
+          media={selectedItem.media}
+          base_uri={selectedItem.base_uri}
           sm_preview
         />
       </div>
@@ -66,17 +70,15 @@ export default function MarketPlaceDetailsPage() {
             {selectedItem?.title}
           </div>
 
-          {!!selectedItem && (
-            <div className="mt-10">
-              {(NFTDetails || []).map((item, index) => (
-                <MarketPlaceRentInfo
-                  key={index}
-                  item={selectedItem}
-                  data={item}
-                />
-              ))}
-            </div>
-          )}
+          <div className="mt-10">
+            {(NFTDetails || []).map((item, index) => (
+              <MarketPlaceRentInfo
+                key={index}
+                item={selectedItem}
+                data={item}
+              />
+            ))}
+          </div>
           <div className='z-50 my-5'>
             {!isAdminAccount ? (
               <button

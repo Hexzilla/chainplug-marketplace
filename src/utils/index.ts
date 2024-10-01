@@ -20,3 +20,19 @@ export const imageUrl = (base_uri: string, media: string) => {
     return `${baseUrl}?url=${media}`;
   }
 };
+
+export const setSelectedToken = (token: object)=> {
+  if (localStorage) {
+    localStorage.setItem('selectedToken', JSON.stringify(token))
+  }
+}
+
+export const getSelectedToken = () => {
+  if (localStorage) {
+    const savedItem = localStorage?.getItem('selectedToken');
+    if (savedItem) {
+      return JSON.parse(savedItem);
+    }
+  }
+  return null;
+}

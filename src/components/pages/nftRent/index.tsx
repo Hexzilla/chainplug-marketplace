@@ -1,19 +1,18 @@
 'use client';
-
+import { useMemo, useState } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import ImageViewer from '@/components/ImageViewer';
 import MarketPlaceRentInfo from '@/components/marketPlaceRentInfo';
 import MarketPlaceRent from '@/components/pages/nftRent/marketPlaceRentItem';
 import MarketPlaceTitle from '@/components/pages/nftRent/marketPlaceTitle';
 import MarketPlaceLendInfo from './marketPlaceLendInfo';
 import MarketPlaceLendItem from './marketPlaceLendItem';
-import { useGlobalContext } from '@/hooks/useGlobalContext';
 import NftViewer from '@/components/nftViewer';
-import { useRouter } from 'next/navigation';
 import { useMbWallet } from '@mintbase-js/react';
 import { approveNft, rentNft } from '@/utils/near';
 import { AdminMarketToken, MarketToken } from '@/types/types';
-import { useState } from 'react';
 import { useTokenIdByMetadataId } from '@/hooks/useTokenIdByMetadataId';
+import { getSelectedToken } from '@/utils';
 
 export type MarketPlace = {
   title: string;
@@ -31,17 +30,28 @@ export interface InfoType {
 
 export default function NFTRent() {
   const router = useRouter();
-  const { isRent, selectedItem } = useGlobalContext();
+  const searchParams = useSearchParams();
+  const { tokenId } = useParams();
   const { selector } = useMbWallet();
   const [info, setInfo] = useState<InfoType>({
     unit: 'usdt.fakes.testnet',
     price: 1,
   });
+  const isRent = searchParams.get('rent');
+
+  const selectedItem = useMemo(() => {
+    if (tokenId && typeof tokenId === 'string') {
+      return getSelectedToken();
+    }
+    return null;
+  }, [tokenId]);
+
   const { tokenInfo } = useTokenIdByMetadataId(selectedItem?.metadata_id);
 
   const handleBack = () => {
     router.push('/nft-details');
   };
+
   const handleLend = async () => {
     const wallet = await selector.wallet();
     if (wallet && tokenInfo) {
@@ -55,6 +65,10 @@ export default function NFTRent() {
       await rentNft(wallet, selectedItem as MarketToken);
     }
   };
+
+  if (!selectedItem) {
+    return null;
+  }
 
   return (
     <div className='grid sm:grid-cols-1 lg:grid-cols-2 align-items-center gap-20 px-10 h-full sm:mt-32 lg:mt-0'>

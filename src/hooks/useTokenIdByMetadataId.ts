@@ -53,10 +53,10 @@ const mapStoreTokens = (data: ParsedDataReturn<TokenIdByMetadaResult>) => ({
   tokenInfo: data?.data?.mb_views_nft_tokens[0].token_id,
 });
 
-const useTokenIdByMetadataId = (metadataId: string) => {
+const useTokenIdByMetadataId = (metadataId?: string) => {
   const { isLoading, error, data } = useQuery(
     ['tokenIdByMetadataId', metadataId],
-    () => tokenIdByMetadataId(metadataId),
+    () => tokenIdByMetadataId(metadataId!),
     {
       retry: false,
       refetchOnWindowFocus: false,
