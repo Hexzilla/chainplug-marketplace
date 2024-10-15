@@ -43,7 +43,7 @@ export default function RootLayout({
   });
 
   const MintbaseWalletSetup = {
-    contractAddress: 'drops.mintbase1.near',
+    contractAddress: process.env.NEXT_PUBLIC_STORES,
     network: process.env.NEXT_PUBLIC_NETWORK,
     callbackUrl: getCallbackUrl(),
   };
