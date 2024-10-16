@@ -33,7 +33,7 @@ export const createAccount = async (activeAccountId: string) => {
 
 export const createMarketContract = async (account: nearAPI.Account) => {
   return new nearAPI.Contract(account, MarketPlaceContractId, {
-    viewMethods: ['list_listings_by_nft_contract_id'],
+    viewMethods: ['list_listings_by_nft_contract_id', 'list_listings_by_owner_id'],
     changeMethods: [],
   });
 };
@@ -47,6 +47,20 @@ export const getListedTokenIds = async (
     const contract: any = await createMarketContract(account);
     return await contract['list_listings_by_nft_contract_id']({
       nft_contract_id: store,
+    });
+  }
+  return [];
+};
+
+export const getOwnedTokenIds = async (
+  accountId: string,
+  ownerId: string
+): Promise<ListedToken[]> => {
+  const account = await createAccount(accountId);
+  if (account) {
+    const contract: any = await createMarketContract(account);
+    return await contract['list_listings_by_owner_id']({
+      owner_id: ownerId,
     });
   }
   return [];

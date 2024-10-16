@@ -120,6 +120,20 @@ export interface ListedToken {
   };
 }
 
+export interface OwnedToken {
+  owner_id: string;
+  approval_id: number;
+  nft_contract_id: string;
+  nft_token_id: string;
+  ft_contract_id: string;
+  price: string;
+  lease_start_ts_nano: number;
+  lease_end_ts_nano: number;
+  payout: {
+    payout: Payout;
+  };
+}
+
 export interface MarketToken {
   owner_id: string;
   nft_contract_id: string;
