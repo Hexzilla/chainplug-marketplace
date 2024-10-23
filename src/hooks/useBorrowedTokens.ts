@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { mbjs, NEAR_NETWORKS } from '@mintbase-js/sdk';
 import { MAINNET_CONFIG, TESTNET_CONFIG } from '../config/constants';
-import { getListedTokenIds, getOwnedTokenIds } from '../utils/near';
+import { getBorrowedTokenIds } from '../utils/near';
 import { useStoreTokens } from './useStoreTokens';
-import { ListedToken, OwnedToken, MarketToken } from '@/types/types';
+import { LeasesToken, MarketToken } from '@/types/types';
 import { useMbWallet } from '@mintbase-js/react';
 
 const accountId = process.env.NEXT_PUBLIC_ACCOUNT_ID;
 
-const useOwnedTokens = () => {
-  const [ownedTokens, setOwnedTokens] = useState<OwnedToken[]>([]);
+const useBorrowedTokens = () => {
+  const [borrowedTokens, setBorrowedTokens] = useState<LeasesToken[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const { activeAccountId } = useMbWallet();
@@ -27,38 +27,37 @@ const useOwnedTokens = () => {
     loading,
   } = useStoreTokens(
     defaultStore,
-    ownedTokens.map((i) => i.nft_token_id)
+    borrowedTokens.map((i) => i.token_id)
   );
 
   useEffect(() => {
     if (accountId && activeAccountId) {
-      console.log('accountId', activeAccountId)
       setIsLoading(true);
-      getOwnedTokenIds(accountId, activeAccountId)
+      getBorrowedTokenIds(accountId, activeAccountId)
         .then((tokens) => {
           console.log('~~~~~~~~~~~~~~~~~owned-tokens', tokens);
-          setOwnedTokens(tokens);
+          const leasesTokens = tokens.map(t => t[1])
+          console.log('~~~~~~~~~~~~~~~~~leasesTokens', leasesTokens);
+          setBorrowedTokens(leasesTokens);
         })
         .finally(() => setIsLoading(false));
     }
   }, [activeAccountId]);
 
-  const nftTokens: MarketToken[] = useMemo(() => {
+  const resultTokens: MarketToken[] = useMemo(() => {
     if (!error && !loading && storeTokens) {
-      return ownedTokens
+      return borrowedTokens
         .map((token) => {
-          const storeToken = storeTokens.find(
-            (i) => i.token_id === token.nft_token_id
-          );
+          const storeToken = storeTokens.find((i) => i.token_id === token.token_id);
           if (!storeToken) {
             return null;
           }
 
           const marketToken: MarketToken = {
-            owner_id: token.owner_id,
-            nft_contract_id: token.nft_contract_id,
-            nft_token_id: token.nft_token_id,
-            ft_contract_id: token.ft_contract_id,
+            owner_id: token.borrower_id,
+            nft_contract_id: token.contract_addr,
+            nft_token_id: token.token_id,
+            ft_contract_id: token.ft_contract_addr,
             price: token.price,
             payout: token.payout,
             title: storeToken.title,
@@ -71,14 +70,14 @@ const useOwnedTokens = () => {
         })
         .filter((i) => !!i);
     }
-    return [] as MarketToken[];
-  }, [ownedTokens, storeTokens, error, loading]);
+    return [];
+  }, [borrowedTokens, storeTokens, error, loading]);
+  console.log('resultTokens', resultTokens)
 
   return {
-    nftTokens,
-    marketTokenError: error,
-    marketTokenLoading: loading || isLoading,
+    borrowedTokens: resultTokens,
+    loading: loading || isLoading,
   };
 };
 
-export { useOwnedTokens };
+export { useBorrowedTokens };

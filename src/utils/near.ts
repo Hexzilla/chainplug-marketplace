@@ -6,14 +6,12 @@ import {
   NEAR_NETWORKS,
   TransactionSuccessEnum,
 } from '@mintbase-js/sdk';
-import { AdminMarketToken, ListedToken, MarketToken } from '@/types/types';
+import { AdminMarketToken, LeasesToken, ListedToken, MarketToken } from '@/types/types';
 import { Wallet } from '@mintbase-js/react';
 import { MAINNET_CONFIG, TESTNET_CONFIG } from '../config/constants';
 
-export const MarketPlaceContractId = process.env
-  .NEXT_PUBLIC_MARKETPLACE_ACCOUNT as string;
-export const RentalContractId = process.env
-  .NEXT_PUBLIC_RENTAL_ACCOUNT as string;
+export const MarketPlaceContractId = process.env.NEXT_PUBLIC_MARKETPLACE_ACCOUNT as string;
+export const RentalContractId = process.env.NEXT_PUBLIC_RENTAL_ACCOUNT as string;
 
 export const getConfig = () => {
   return mbjs.keys?.network === NEAR_NETWORKS.TESTNET
@@ -38,10 +36,14 @@ export const createMarketContract = async (account: nearAPI.Account) => {
   });
 };
 
-export const getListedTokenIds = async (
-  accountId: string,
-  store: string
-): Promise<ListedToken[]> => {
+export const createRentalContract = async (account: nearAPI.Account) => {
+  return new nearAPI.Contract(account, RentalContractId, {
+    viewMethods: ['leases_by_owner', 'leases_by_borrower'],
+    changeMethods: [],
+  });
+};
+
+export const getListedTokenIds = async (accountId: string, store: string): Promise<ListedToken[]> => {
   const account = await createAccount(accountId);
   if (account) {
     const contract: any = await createMarketContract(account);
@@ -52,15 +54,13 @@ export const getListedTokenIds = async (
   return [];
 };
 
-export const getOwnedTokenIds = async (
-  accountId: string,
-  ownerId: string
-): Promise<ListedToken[]> => {
+export const getBorrowedTokenIds = async (accountId: string, borrowerId: string): Promise<any[]> => {
   const account = await createAccount(accountId);
+  console.log('getBorrowedTokenIds', account, borrowerId)
   if (account) {
-    const contract: any = await createMarketContract(account);
-    return await contract['list_listings_by_owner_id']({
-      owner_id: ownerId,
+    const contract: any = await createRentalContract(account);
+    return await contract['leases_by_borrower']({
+      account_id: borrowerId,
     });
   }
   return [];
@@ -96,7 +96,7 @@ export const approveNft = async (
 
 export const rentNft = async (wallet: Wallet, token: MarketToken) => {
   const config = getConfig();
-  const callbackUrl = 'http://localhost:3000/callback/nftrent';
+  const callbackUrl = process.env.NEXT_PUBLIC_WEBSITE_URL + '/my-nfts';
 
   const callBackArgs = {
     contractId: token.nft_contract_id,

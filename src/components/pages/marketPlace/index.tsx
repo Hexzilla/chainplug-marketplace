@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Item } from '@/components/Item';
 import { useAdminMarketToken } from '@/hooks/useAdminMarketToken';
@@ -11,7 +12,6 @@ import { AdminMarketToken, MarketToken } from '@/types/types';
 import { AdminItem } from '@/components/AdminItem';
 import LoadingItem from '@/components/LoadingItem';
 import MarketPlaceLoadingView from './MarketPlaceLoadingView';
-import { useMemo } from 'react';
 
 export default function LandingPage() {
   const router = useRouter();

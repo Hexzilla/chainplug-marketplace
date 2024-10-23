@@ -1,4 +1,4 @@
-import { Contract, WalletConnection } from "near-api-js"
+import { Contract, WalletConnection } from 'near-api-js';
 
 export enum TransactionEnum {
   MINT = 'mint',
@@ -79,9 +79,8 @@ export interface PriceEl {
 }
 
 export interface BuyModalData {
-  data: TokenListData
+  data: TokenListData;
 }
-
 
 export interface WalletConnect {
   contract: any;
@@ -91,15 +90,15 @@ export interface WalletConnect {
 }
 
 export interface FeaturedData {
-  base_uri: string,
-  media: string,
-  description: string,
-  nft_contract_id: string,
-  nft_contract_icon: string,
-  nft_contract_name: string,
-  owner: string,
-  title: string,
-  token_id: string
+  base_uri: string;
+  media: string;
+  description: string;
+  nft_contract_id: string;
+  nft_contract_icon: string;
+  nft_contract_name: string;
+  owner: string;
+  title: string;
+  token_id: string;
 }
 
 export interface Payout {
@@ -132,6 +131,19 @@ export interface OwnedToken {
   payout: {
     payout: Payout;
   };
+}
+
+export interface LeasesToken {
+  contract_addr: string;
+  token_id: string;
+  lender_id: string;
+  borrower_id: string;
+  ft_contract_addr: string;
+  start_ts_nano: number;
+  end_ts_nano: number;
+  price: string;
+  payout: any;
+  state: 'Active' | string;
 }
 
 export interface MarketToken {

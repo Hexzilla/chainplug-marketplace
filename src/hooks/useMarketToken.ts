@@ -66,7 +66,7 @@ const useMarketToken = () => {
         })
         .filter((i) => !!i);
     }
-    return [] as MarketToken[];
+    return [];
   }, [listedTokens, storeTokens, error, loading]);
 
   return {
@@ -76,6 +76,6 @@ const useMarketToken = () => {
   };
 };
 
-const invalidTokenIds = ['1',];
+const invalidTokenIds = ['100000000',];
 
 export { useMarketToken };

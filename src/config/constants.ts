@@ -14,8 +14,8 @@ export const TESTNET_CONFIG = {
   walletUrl: 'https://wallet.testnet.near.org',
   helperUrl: 'https://helper.testnet.near.org',
   explorerUrl: 'https://explorer.testnet.near.org',
-  market: 'topdev-market.testnet',
-  stores: 'topdevstore.mintspace2.testnet',
+  market: 'topdev-market-v2.testnet',
+  stores: 'topdevstore2.mintspace2.testnet',
   // Change this referral address below to your account to test it out on purchase from other stores you add and see market fees go right to you.
   affiliate: 'unlock.testnet',
   headers: {

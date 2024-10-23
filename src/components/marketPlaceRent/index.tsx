@@ -5,6 +5,7 @@ import MarketPlaceRent from '../pages/nftRent/marketPlaceRentItem';
 import MarketPlaceLendItem from '../pages/nftRent/marketPlaceLendItem';
 import MarketPlaceLendInfo from '../pages/nftRent/marketPlaceLendInfo';
 import { useGlobalContext } from '@/hooks/useGlobalContext';
+import { MarketToken } from '@/types/types';
 
 export type MarketPlace = {
   title: string;
@@ -24,6 +25,7 @@ interface Props {
 
 const MarketplaceRent = ({ data, type, handleBack }: Props) => {
   const { selectedItem } = useGlobalContext();
+  const marketItem = selectedItem as MarketToken;
   const handleLend = () => {
     console.log(`handlelend`);
   };
@@ -50,7 +52,7 @@ const MarketplaceRent = ({ data, type, handleBack }: Props) => {
           {/* rent */}
           {type == 'rent' && (
             <>
-              <MarketPlaceTitle item={selectedItem} />
+              <MarketPlaceTitle item={marketItem} />
               <div className='mt-20'>
                 <div
                   className='bg-transparent w-full text-[32px] font-[400] text-white'
@@ -59,11 +61,11 @@ const MarketplaceRent = ({ data, type, handleBack }: Props) => {
                   Lease Info
                 </div>
                 {(marketDetails || []).map((item: any, index: any) => (
-                  <MarketPlaceRentInfo item={selectedItem} data={item} />
+                  <MarketPlaceRentInfo key={index} item={marketItem} data={item} />
                 ))}
               </div>
               <MarketPlaceRent
-                item={selectedItem}
+                item={marketItem}
                 handleBack={handleBack}
                 handleRent={handleRent}
               />
@@ -73,9 +75,9 @@ const MarketplaceRent = ({ data, type, handleBack }: Props) => {
           {/* lend */}
           {type == 'lend' && (
             <>
-              <MarketPlaceTitle item={selectedItem} title='Lend' />
+              <MarketPlaceTitle item={marketItem} title='Lend' />
               <div>
-                <MarketPlaceLendInfo handleLendInfo={handleLendInfo} />
+                {/* <MarketPlaceLendInfo handleLendInfo={handleLendInfo} /> */}
               </div>
               <MarketPlaceLendItem
                 handleBack={handleBack}

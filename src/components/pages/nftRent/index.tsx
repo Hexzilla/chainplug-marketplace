@@ -92,7 +92,7 @@ export default function NFTRent() {
                 Lease Info
               </div>
               {(marketDetails || []).map((item: any, index: any) => (
-                <MarketPlaceRentInfo item={selectedItem} data={item} />
+                <MarketPlaceRentInfo key={index} item={selectedItem} data={item} />
               ))}
             </div>
             <div className='w-[222px] mt-5'>
