@@ -19,10 +19,12 @@ function Item({
 
   return (
     <div onClick={() => showDetails(item)}>
-      <NftViewer base_uri={base_uri} media={media} />
-      <div className='mt-5 text-white'>
-        <ItemInfo item={item} />
-      </div>
+      <NftViewer base_uri={base_uri} media={media}>
+        <div className='mt-5 text-white'>
+          <ItemInfo item={item} />
+        </div>
+      </NftViewer>
+
     </div>
   );
 }
