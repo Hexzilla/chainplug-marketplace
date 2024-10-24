@@ -66,7 +66,7 @@ export default function RootLayout({
                 <main className='min-h-screen'>
                   <div className='relative w-full h-screen p-8 bg-[#111111] overflow-x-hidden'>
                     <MenuTop />
-                    <div className='w-full h-full bg-[radial-gradient(circle_at_bottom,_var(--tw-gradient-stops))] from-[#1E70F5] to-[#031126] border-l-2 border-t-2 border-r-2 border-[#4E4E4E] overflow-auto custom-scrollbar px-[150px]'>
+                    <div className='w-full h-full bg-[radial-gradient(circle_at_bottom,_var(--tw-gradient-stops))] from-[#1E70F5] to-[#031126] border-l-2 border-t-2 border-r-2 border-[#4E4E4E] overflow-auto custom-scrollbar px-[50px] md:pt-[100px] lg:pt-[150px] pt-[80px] md:pt-[90px] lg:pt-[100px]'>
                       {children}
                     </div>
                     <MenuCenter />
