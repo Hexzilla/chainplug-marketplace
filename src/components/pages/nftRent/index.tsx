@@ -49,7 +49,7 @@ export default function NFTRent() {
   const { tokenInfo } = useTokenIdByMetadataId(selectedItem?.metadata_id);
 
   const handleBack = () => {
-    router.push('/nft-details');
+    router.back();
   };
 
   const handleLend = async () => {
